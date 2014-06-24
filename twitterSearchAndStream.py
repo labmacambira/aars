@@ -30,8 +30,8 @@ print 1
 
 
 #search = t.search(q=HTAG,count=150,max_id=tweets[-1]['id']-1)
-search = t.search(q=HTAG,count=150)
-from maccess import mdc.u1 as U
+from maccess import mdc as U
+U=U.u1
 client=pymongo.MongoClient(U)
 db = client[U.split("/")[-1]]
 C = db[HTAG_] #collection
@@ -42,11 +42,14 @@ simple=1
 if simple:
     print "colecao jah existe"
     quantos=foo.count()
-    ultima= foo[quantos-1]["id"]
-    search = t.search(q=HTAG,count=150,since_id=ultima,result_type="recent")
+    if quantos:
+        ultima= foo[quantos-1]["id"]
+        search = t.search(q=HTAG,count=150,since_id=ultima,result_type="recent")
+    else:
+        search = t.search(q=HTAG,count=150,result_type="recent")
     ss+=search["statuses"][::-1]
-    print len(ss)
-    C.insert(ss)
+    if len(ss):
+        C.insert(ss)
 else:
     if not foo.count(): # collection n existe
         print "colecao n existe"
@@ -130,13 +133,11 @@ class MyStreamer(TwythonStreamer):
             try:
                 C.insert(data)            
             except:
-                client=pymongo.MongoClient(mdc.u2)
-                db = client['sna']
+                client=pymongo.MongoClient(U)
+                db = client[U.split("/")[-1]]
                 C = db[HTAG_] #collection
                 C.insert(data)            
             print data['user']["screen_name"].encode('utf-8'),data['text'].encode('utf-8'),data["created_at"]
-
-
     def on_error(self, status_code, data):
         print status_code
 

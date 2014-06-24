@@ -1,3 +1,4 @@
+# mongo ds061188.mongolab.com:61188/tw1 -u foo -p bar 
 class mdc:
     u1="mongodb://foo:bar@ds061188.mongolab.com:61188/tw1"
     u2="mongodb://foo:bar@ds037467.mongolab.com:37467/tw2"

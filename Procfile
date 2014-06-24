@@ -1,1 +1,1 @@
-worker: python herokutest.py 
+worker: python twitterSearchAndStream.py 
