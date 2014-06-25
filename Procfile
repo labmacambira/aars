@@ -1,1 +1,1 @@
-web: gunicorn flaskServer:app
+worker: python twitterSearchAndStream.py 
