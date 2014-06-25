@@ -1,0 +1,19 @@
+<head>
+  <title>aars1</title>
+</head>
+
+<body>
+  {{> hello}}
+</body>
+
+<template name="hello">
+  <h1>AARS Nova!</h1>
+  {{greeting}}
+<br/>
+<br/>
+<br/>
+  {{#each info}}
+    {{this}}<br/>
+  {{/each}}
+  <input type="button" value="Click" />
+</template>

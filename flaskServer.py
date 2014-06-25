@@ -28,8 +28,8 @@ def jsonMe():
     db = client[U.split("/")[-1]]
     C = db[HTAG_] #collection
     msgs=[i for i in C.find()]
-    info=[(mm["user"]["screen_name"],mm["text"],mm["created_at"]) for mm in msgs]
-    return json.dumps(info)
+    info=[[mm["user"]["screen_name"],mm["text"],mm["created_at"]] for mm in msgs]
+    return jsonify(info=info)
 
 if __name__ == "__main__":
     app.debug = True
