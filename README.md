@@ -38,6 +38,18 @@ Anotações
   meteor add login-facebook
 No .html do app, basta colocar:
   {{> loginButtons}}
+No browser, o html vai exibit botão para configurar.
+Vai no developers do fb, cria app, pega a chave e a secreta,
+coloca a Site URL correta (p.ex: http://localhost:3000 ou http://aars.meteor.com, no "Settings". Deixa ele live no "Status & Review". Deve estar fazendo login normalmente.
+auth fb do gk no localhost:
+    id: 670669796332705
+    key: 0f24e7e8ad8028f609319e390794e770
+no aars.meteor.com:
+    id: 293574867488230
+    key: a125ab84e3e4a336011cdd40a89865d2
+p zerar:
+    $ meteor mongo blah.meteor.com
+    > db.meteor_accounts_loginServiceConfiguration.remove()
 * Integrar identi.ca e diaspora, com urgencia
 * Pensar em integrar com emails
 
