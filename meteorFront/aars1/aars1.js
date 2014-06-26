@@ -14,11 +14,24 @@ Accounts.ui.config({
     if(typeof Accounts.connection.userId()==="string"){
          Meteor.call('getUserData', function(err, data) {
             tdata=data;
-            // $('#result').text(JSON.stringify(data, undefined, 4));
             Session.set("name",tdata.name);
             Session.set("gender",tdata.gender);
+            Session.set("email",tdata.email);
+            Session.set("updatedfb",tdata.updated_time);
+            Session.set("tdata",tdata);
          });
-        return "Bem vindo, "+Session.get("name")+", "+Session.get("gender");
+         Meteor.call('getFriends', function(err, data) {
+            tdata2=data;
+         });
+         Meteor.call('getFFriends', function(err, data) {
+            tdata3=data;
+         });
+
+        if(Session.get("completo")===undefined){
+            return "Bem vindo, "+Session.get("name")+", "+Session.get("gender")+", "+Session.get("email")+", atualizado: "+Session.get("updatedfb");
+        } else {
+            return JSON.stringify(Session.get("tdata"));
+        }
     }
     else {
         tdata=undefined;
@@ -38,10 +51,18 @@ Accounts.ui.config({
   }
 }
   Template.hello.events({
+    'click #completo': function () {
+        if(Session.get("completo")===undefined){
+            Session.set("completo",1);
+        } else {
+            Session.set("completo",undefined);
+        }
+    },
     'click input': function () {
       // template data, if any, is available in 'this'
       if (typeof console !== 'undefined')
         console.log("You pressed the button");
+        Session.set("completo",1);
     }
   });
 
