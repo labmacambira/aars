@@ -8,7 +8,44 @@ Accounts.ui.config({
             'user_status', 'friends_status', 'read_friendlists'],
     }
 });
+ Template.hello.online=function(){
+    if(typeof Accounts.connection.userId()==="string"){
+        return 1;
+    } else {
+        return 0;
+    }
+}
 
+  Template.hello.mfriends= function () {
+    if(Session.get("mfriend_count")===undefined){
+        return undefined;
+    } else {
+         return "conferidas amizades mútuas de " + Session.get("mfriend_count") + " amigos, "+(100*Session.get("mfriend_fract")).toFixed(2) + "%";
+    }
+}
+  Template.hello.brick_width = function () {
+    if(Session.get("mfriend_fract")===undefined){
+        return 0;
+    }  else {
+        return Math.floor(200*Session.get("mfriend_fract"));
+    }
+}
+  Template.hello.greeting2 = function () {
+    if(typeof Accounts.connection.userId()==="string"){
+         Meteor.call('getFriends', function(err, data) {
+            tdata2=data;
+            Session.set("tdata2",data);
+            Session.set("namigos",data.data.length);
+         });
+        if(Session.get("completo2")===undefined){
+            return "amigos acessíveis: "+Session.get("namigos");
+        } else {
+            return JSON.stringify(Session.get("tdata2"));
+        }
+    } else {
+        return undefined;
+    }
+  }
 
   Template.hello.greeting = function () {
     if(typeof Accounts.connection.userId()==="string"){
@@ -19,12 +56,6 @@ Accounts.ui.config({
             Session.set("email",tdata.email);
             Session.set("updatedfb",tdata.updated_time);
             Session.set("tdata",tdata);
-         });
-         Meteor.call('getFriends', function(err, data) {
-            tdata2=data;
-         });
-         Meteor.call('getFFriends', function(err, data) {
-            tdata3=data;
          });
 
         if(Session.get("completo")===undefined){
@@ -58,6 +89,34 @@ Accounts.ui.config({
             Session.set("completo",undefined);
         }
     },
+    'click #completo2': function () {
+        if(Session.get("completo2")===undefined){
+            Session.set("completo2",1);
+        } else {
+            Session.set("completo2",undefined);
+        }
+    },
+    'click #amizades': function () {
+        // para cada amigo
+        // pega os mutual friends
+        // e aumenta o brick_width no mesmo fator
+        tdict={};
+        tdata2.data.forEach(function(i){console.log(i.id);
+
+         Meteor.call('getFFriends', i.id, function(err, data) {
+            var tdata3=data[0];
+            var tid=data[1];
+            tdict[tid]=tdata3;
+            if(Session.get("mfriend_count")===undefined){
+                Session.set("mfriend_count",1);
+            } else {
+                Session.set("mfriend_count",Session.get("mfriend_count")+1);
+                Session.set("mfriend_fract",Session.get("mfriend_count")/Session.get("namigos"));
+            }
+         });
+ });
+    },
+
     'click input': function () {
       // template data, if any, is available in 'this'
       if (typeof console !== 'undefined')
@@ -128,7 +187,7 @@ Facebook.prototype.getFFriends = function(tid) {
         console.log(tid);
         var fb = new Facebook(Meteor.user().services.facebook.accessToken);
         var data = fb.getFFriends(tid);
-        return data;
+        return [data,tid];
     },
 });
 
