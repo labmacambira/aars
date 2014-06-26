@@ -11,15 +11,31 @@ Accounts.ui.config({
 
 
   Template.hello.greeting = function () {
-    return "Bem vindo.";
+    if(typeof Accounts.connection.userId()==="string"){
+         Meteor.call('getUserData', function(err, data) {
+            tdata=data;
+            // $('#result').text(JSON.stringify(data, undefined, 4));
+            Session.set("name",tdata.name);
+            Session.set("gender",tdata.gender);
+         });
+        return "Bem vindo, "+Session.get("name")+", "+Session.get("gender");
+    }
+    else {
+        tdata=undefined;
+        return "Faça Login";
+    }
   };
   Template.hello.info=function(){ 
-    var tinfo=Session.get("info");
-    tinfo_=[];
-    for(var x in tinfo){
-        tinfo_.push(tinfo[x][1]);
+    if(typeof Accounts.connection.userId()==="string"){
+        var tinfo=Session.get("info");
+        tinfo_=[];
+        for(var x in tinfo){
+            tinfo_.push(tinfo[x][1]);
 }
-    return tinfo_;
+        return tinfo_;
+  } else {
+        return undefined;
+  }
 }
   Template.hello.events({
     'click input': function () {
@@ -35,10 +51,6 @@ Accounts.ui.config({
             tres=results;
             Session.set("info",tres.data.info);
         });
- Meteor.call('getUserData', function(err, data) {
-            tdata=data;
-            // $('#result').text(JSON.stringify(data, undefined, 4));
-         });
 });
  
 
