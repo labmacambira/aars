@@ -8,6 +8,6 @@ autopublish
 insecure
 http
 accounts-facebook
-accounts-ui
 npm
 d3
+accounts-ui
