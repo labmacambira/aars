@@ -99,6 +99,31 @@ Accounts.ui.config({
             Session.set("completo2",undefined);
         }
     },
+    'click #baixaAmigos': function () {
+        console.log("aqui2");
+        fdata=Session.get("tdata2");
+        var i=0;
+        II=[];
+        while(i<5){
+            ii=fdata.data[i];
+            II.push(ii.id);
+            i++;
+        }
+        // pega os mutual friends
+        Meteor.call('getMutualFriends',II, function(err, data) {
+            ddata=data;
+        });
+        Meteor.call('batchTest', function(err, data) {
+            cdata=data;
+        });
+},
+
+    'click #bteste': function () {
+        console.log("aqui");
+         Meteor.call('batchTest', function(err, data) {
+            bdata=data;
+        });
+},
     'click #gamizades': function () {
         if(Session.get("vgraph")===undefined){
             tsvg=d3.select("#gdiv").append("svg").attr("id","gsvg").attr("width","100%").attr("height","100%");
@@ -112,28 +137,25 @@ Accounts.ui.config({
         // para cada amigo
         tdict={};
         for(var j=0;j<tdata2.data.length;j++){
-        JJJ=j;
-        i=tdata2.data[j];
-        //tdata2.data.forEach(function(i){
-        console.log(i.id);
-
-        // pega os mutual friends
-         Meteor.call('getFFriends', i.id, function(err, data) {
-            var tdata3=data[0];
-            var tid=data[1];
-            tdict[tid]=tdata3;
-            // e aumenta o brick_width no mesmo fator
-            if(Session.get("mfriend_count")===undefined){
-                Session.set("mfriend_count",1);
-            } else {
-                Session.set("mfriend_count",Session.get("mfriend_count")+1);
-                Session.set("mfriend_fract",Session.get("mfriend_count")/Session.get("namigos"));
-            }
-         });
-// });
+            JJJ=j;
+            i=tdata2.data[j];
+            //tdata2.data.forEach(function(i){
+            console.log(i.id);
+            // pega os mutual friends
+             Meteor.call('getFFriends', i.id, function(err, data) {
+                var tdata3=data[0];
+                var tid=data[1];
+                tdict[tid]=tdata3;
+                // e aumenta o brick_width no mesmo fator
+                if(Session.get("mfriend_count")===undefined){
+                    Session.set("mfriend_count",1);
+                } else {
+                    Session.set("mfriend_count",Session.get("mfriend_count")+1);
+                    Session.set("mfriend_fract",Session.get("mfriend_count")/Session.get("namigos"));
+                }
+             });
 }
     },
-
     'click input': function () {
       // template data, if any, is available in 'this'
       if (typeof console !== 'undefined')
@@ -141,7 +163,6 @@ Accounts.ui.config({
         Session.set("completo",1);
     }
   });
-
   Meteor.startup(function () { 
         Meteor.call("jsonTest", function(error,results) {
             terr=error;
@@ -149,8 +170,6 @@ Accounts.ui.config({
             Session.set("info",tres.data.info);
         });
 });
- 
-
 }
 
 if (Meteor.isServer) {
@@ -188,6 +207,20 @@ Facebook.prototype.getFFriends = function(tid) {
     return this.query('me/mutualfriends/'+tid);
 }
     Meteor.methods({
+       getMutualFriends: function (tids) {
+            console.log(tids,tids.length);
+            var foo=[];
+            for(var i=0; i<tids.length; i++){
+                foo.push({method:"GET",relative_url:"me/mutualfriends/"+tids[i]})
+}
+            console.log("foo: ", foo);
+            tquery=JSON.stringify(foo);
+            console.log(tquery);
+            return Meteor.http.call("GET", 'https://graph.facebook.com/?batch='+tquery+'&access_token='+Meteor.user().services.facebook.accessToken+'&method=post'); 
+        },
+       batchTest: function () {
+            return Meteor.http.call("GET", 'https://graph.facebook.com/?batch=[{"method":"GET","relative_url":"me"},{"method":"GET","relative_url":"me/friends?limit=50"}]&access_token='+Meteor.user().services.facebook.accessToken+'&method=post'); 
+        },
        jsonTest: function () {
             return Meteor.http.call("GET", "http://0.0.0.0:5000/jsonMe/"); },
     getUserData: function() {
