@@ -1,5 +1,77 @@
-
 if (Meteor.isClient) {
+function makeFGraph(){
+    //var fdata=session.get("tdata2").data;
+    //tnodes=[];
+    tnodes=Session.get("tdata2").data;
+    node_dict={};
+    for(var i=0; i<tnodes.length; i++){
+        var amigo=tnodes[i];
+        node_dict[amigo.id]=i;
+    }
+    tlinks=[];
+    for(var i=0; i<II.length; i++){
+        amigos=II[i];
+        amizades_deles=DDATA[i].data;
+        if(amigos.length ==! amizades_deles.length){
+            console.log("numero de amigos nao igual ao numero de amizades");
+        }
+        for(var j=0; j<amigos.length; j++){
+            amigo=amigos[j];
+            indice1=node_dict[amigo.id];
+            amizades=JSON.parse(amizades_deles[j].body).data;
+            for(var k=0; k<amizades.length; k++){
+                amizade=amizades[k];
+                indice2=node_dict[amizade.id];
+                tlinks.push({source:indice1, target:indice2});
+            }
+        }
+    }
+    return [tnodes,tlinks];
+}
+function drawFGraph(){
+    tsvg=d3.select("#gsvg");
+    W=tsvg.node().clientWidth;H=tsvg.node().clientHeight
+    //tsvg.insert("rect").style("fill","red").attr("width","100%").attr("height","100%");
+    //nodes=[{name:"pitchuca"},{name:"eu"},{name:"juvira"},{name:"penalva"}];
+    //links=[{source:0,target:1},{source:1,target:2}];
+    foobar=makeFGraph();
+    nodes=foobar[0];
+    links=foobar[1];
+    force = d3.layout.force()
+        .nodes(nodes)
+        .links(links)
+        //.size(["100%", "100%"])
+        .size([W, H])
+        //.size(["100", "100"])
+        .start();
+links_ = tsvg.selectAll(".link")
+      .data(links)
+    .enter().append("line")
+      .attr("class", "link")
+      .style("stroke-width", function(d) { return 2; });
+color = d3.scale.category20();
+nodes_ = tsvg.selectAll(".node")
+      .data(nodes)
+    .enter().append("circle")
+      .attr("class", "node")
+      .attr("r", 5)
+      .style("fill", function(d) { return color(3); })
+      .call(force.drag);
+nodes_.append("title")
+      .text(function(d) { return d.name; });
+force.on("tick", function() {
+    links_.attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+
+    nodes_.attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });
+  });
+}
+
+Amizades = new Meteor.Collection("amizades");
+Foo = new Meteor.Collection("foo");
 Accounts.ui.config({
   requestPermissions: {
     facebook: ['email', 'user_friends', 'user_location', 'user_events',
@@ -59,8 +131,6 @@ Accounts.ui.config({
 
   Template.hello.greeting = function () {
     if(typeof Accounts.connection.userId()==="string"){
-
-
         if(Session.get("completo")===undefined){
             return "Bem vindo, "+Session.get("name")+", "+Session.get("gender")+", "+Session.get("email")+", atualizado: "+Session.get("updatedfb");
         } else {
@@ -99,23 +169,35 @@ Accounts.ui.config({
             Session.set("completo2",undefined);
         }
     },
-    'click #baixaAmigos': function () {
+    'click #baixaAmizades': function () {
         console.log("aqui2");
         fdata=Session.get("tdata2");
-        var i=0;
         II=[];
-        while(i<5){
-            ii=fdata.data[i];
-            II.push(ii.id);
-            i++;
+        for(var i=0; i<fdata.data.length; i++){
+            if( i%50 === 0 ){
+                II.push([]);
+            }
+            var j=Math.floor(i/50);
+            II[j].push(fdata.data[i]);
         }
         // pega os mutual friends
-        Meteor.call('getMutualFriends',II, function(err, data) {
-            ddata=data;
-        });
-        Meteor.call('batchTest', function(err, data) {
-            cdata=data;
-        });
+        DDATA=[];
+        console.log("aqui3");
+        for(var i=0; i<II.length; i++){
+            Meteor.call('getMutualFriends',[II[i],i], function(err, data) {
+                console.log(i);
+                var ddata=data;
+                DDATA.push(ddata);
+                if(Session.get("mfriend_count")===undefined){
+                    Session.set("mfriend_count",ddata.data.length);
+                } else {
+                    Session.set("mfriend_count",Session.get("mfriend_count")+ddata.data.length);
+                    Session.set("mfriend_fract",Session.get("mfriend_count")/Session.get("namigos"));
+                }
+            });
+        }
+        var foobar=Session.get("tdata").id;
+        Amizades.insert({ fbid:foobar, amigos: fdata.data, amigos_agrupados: II, amizades : DDATA});
 },
 
     'click #bteste': function () {
@@ -127,34 +209,12 @@ Accounts.ui.config({
     'click #gamizades': function () {
         if(Session.get("vgraph")===undefined){
             tsvg=d3.select("#gdiv").append("svg").attr("id","gsvg").attr("width","100%").attr("height","100%");
+            drawFGraph();
             Session.set("vgraph",1);
         } else {
             d3.select("#gsvg").remove();
             Session.set("vgraph",undefined);
         }
-    },
-    'click #amizades': function () {
-        // para cada amigo
-        tdict={};
-        for(var j=0;j<tdata2.data.length;j++){
-            JJJ=j;
-            i=tdata2.data[j];
-            //tdata2.data.forEach(function(i){
-            console.log(i.id);
-            // pega os mutual friends
-             Meteor.call('getFFriends', i.id, function(err, data) {
-                var tdata3=data[0];
-                var tid=data[1];
-                tdict[tid]=tdata3;
-                // e aumenta o brick_width no mesmo fator
-                if(Session.get("mfriend_count")===undefined){
-                    Session.set("mfriend_count",1);
-                } else {
-                    Session.set("mfriend_count",Session.get("mfriend_count")+1);
-                    Session.set("mfriend_fract",Session.get("mfriend_count")/Session.get("namigos"));
-                }
-             });
-}
     },
     'click input': function () {
       // template data, if any, is available in 'this'
@@ -173,6 +233,8 @@ Accounts.ui.config({
 }
 
 if (Meteor.isServer) {
+Amizades = new Meteor.Collection("amizades");
+Foo = new Meteor.Collection("foo");
 function Facebook(accessToken) {
     this.fb = Meteor.require('fbgraph');
     this.accessToken = accessToken;
@@ -207,15 +269,18 @@ Facebook.prototype.getFFriends = function(tid) {
     return this.query('me/mutualfriends/'+tid);
 }
     Meteor.methods({
-       getMutualFriends: function (tids) {
-            console.log(tids,tids.length);
+       getMutualFriends: function (tids_) {
+            tids=tids_[0];
+            //console.log(tids,tids.length,tids_[1]);
+            console.log(tids_[1]);
             var foo=[];
             for(var i=0; i<tids.length; i++){
-                foo.push({method:"GET",relative_url:"me/mutualfriends/"+tids[i]})
+                console.log("me/mutualfriends/"+tids[i].id);
+                foo.push({method:"GET",relative_url:"me/mutualfriends/"+tids[i].id})
 }
-            console.log("foo: ", foo);
+            //console.log("foo: ", foo);
             tquery=JSON.stringify(foo);
-            console.log(tquery);
+            //console.log(tquery);
             return Meteor.http.call("GET", 'https://graph.facebook.com/?batch='+tquery+'&access_token='+Meteor.user().services.facebook.accessToken+'&method=post'); 
         },
        batchTest: function () {
