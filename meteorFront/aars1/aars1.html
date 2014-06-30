@@ -11,13 +11,55 @@
   <h1>AAES!</h1>
   {{#if online}}
   {{greeting}}
-<span id="completo" style="background-color:red">expandir completo</span><br />
+<!-- Button trigger modal -->
+<button id="completo" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  ver dados completos
+</button>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+        <h4 class="modal-title" id="myModalLabel">Dados básicos completos</h4>
+      </div>
+      <div class="modal-body">
+    {{greeting_completo}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div><br />
   {{greeting2}}
-<span id="completo2" style="background-color:red">expandir completo</span><br />
+<!-- Button trigger modal -->
+<button id="completo2" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">
+  ver dados completos
+</button>
+<!-- Modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+        <h4 class="modal-title" id="myModalLabel2">Dados completos dos amigos acessíveis</h4>
+      </div>
+      <div class="modal-body">
+    {{greeting2_completo}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div><br />
+
 <svg width="200" height="10">
   <rect width="200" height="10" style="fill:rgb(130,200,0);stroke-width:3;stroke:rgb(0,0,0)" />
   <rect width="{{brick_width}}" height="10" style="fill:rgb(0,200,255);stroke-width:3;stroke:rgb(0,0,0)" />
 </svg>{{mfriends}}
+
 <span id="baixaAmizades" style="background-color:red">baixar amizades entre os amigos</span><br />
 <span id="gamizades" style="background-color:red">mostrar grafo de amizades</span><br />
 <div id="gdiv"></div>

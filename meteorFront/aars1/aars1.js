@@ -119,11 +119,14 @@ Accounts.ui.config({
 }
   Template.hello.greeting2 = function () {
     if(typeof Accounts.connection.userId()==="string"){
-        if(Session.get("completo2")===undefined){
             return "amigos acessíveis: "+Session.get("namigos");
-        } else {
-            return JSON.stringify(Session.get("tdata2"));
-        }
+    } else {
+        return undefined;
+    }
+  }
+  Template.hello.greeting2_completo = function () {
+    if(typeof Accounts.connection.userId()==="string"){
+        return JSON.stringify(Session.get("tdata2"));
     } else {
         return undefined;
     }
@@ -131,14 +134,18 @@ Accounts.ui.config({
 
   Template.hello.greeting = function () {
     if(typeof Accounts.connection.userId()==="string"){
-        if(Session.get("completo")===undefined){
             return "Bem vindo, "+Session.get("name")+", "+Session.get("gender")+", "+Session.get("email")+", atualizado: "+Session.get("updatedfb");
-        } else {
-            return JSON.stringify(Session.get("tdata"));
-        }
-    }
-    else {
+    } else {
         tdata=undefined;
+        return "Faça Login";
+    }
+  };
+
+  Template.hello.greeting_completo = function () {
+    if(typeof Accounts.connection.userId()==="string"){
+        return JSON.stringify(Session.get("tdata"));
+        }
+    else {
         return "Faça Login";
     }
   };
@@ -155,20 +162,6 @@ Accounts.ui.config({
   }
 }
   Template.hello.events({
-    'click #completo': function () {
-        if(Session.get("completo")===undefined){
-            Session.set("completo",1);
-        } else {
-            Session.set("completo",undefined);
-        }
-    },
-    'click #completo2': function () {
-        if(Session.get("completo2")===undefined){
-            Session.set("completo2",1);
-        } else {
-            Session.set("completo2",undefined);
-        }
-    },
     'click #baixaAmizades': function () {
         console.log("aqui2");
         fdata=Session.get("tdata2");
