@@ -163,6 +163,8 @@ Accounts.ui.config({
 }
   Template.hello.events({
     'click #baixaAmizades': function () {
+        btn = $("#baixaAmizades");
+        btn.button('loading');
         console.log("aqui2");
         fdata=Session.get("tdata2");
         II=[];
@@ -186,6 +188,13 @@ Accounts.ui.config({
                 } else {
                     Session.set("mfriend_count",Session.get("mfriend_count")+ddata.data.length);
                     Session.set("mfriend_fract",Session.get("mfriend_count")/Session.get("namigos"));
+                    if(Session.get("mfriend_count")===Session.get("namigos")){
+                        //btn.button('reset');
+                        //btn.attr("data-loading-text","baixadas amizades mútuas");
+                        //btn.button('loading');
+                        btn.text("Baixadas amizades mútuas");
+                        btn.attr("class", "btn btn-danger btn-sm");
+                    }
                 }
             });
         }
