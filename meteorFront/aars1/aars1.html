@@ -3,13 +3,16 @@
 </head>
 
 <body>
-  {{> loginButtons}}
-  {{> hello}}
+    <div class="container">
+      {{> hello}}
+    </div>
 </body>
 
 <template name="hello">
-  <h1>AAES!</h1>
+  <h2>AAES!</h2>
+      {{> loginButtons}}
   {{#if online}}
+    <h3>Dados do facebook</h3>
   {{greeting}}
 <!-- Button trigger modal -->
 <button id="completo" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">
@@ -70,8 +73,7 @@ mostrar grafo de amizades
 <div id="gdiv"></div>
   {{/if}}
 <br/>
-<br/>
-<br/>
+<h3>Tweets</h3>
   {{#each info}}
     {{this}}<br/>
   {{/each}}

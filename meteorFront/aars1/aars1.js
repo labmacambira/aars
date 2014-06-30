@@ -134,7 +134,7 @@ Accounts.ui.config({
 
   Template.hello.greeting = function () {
     if(typeof Accounts.connection.userId()==="string"){
-            return "Bem vindo, "+Session.get("name")+", "+Session.get("gender")+", "+Session.get("email")+", atualizado: "+Session.get("updatedfb");
+            return "Bem vindo. Dados primários: "+Session.get("gender")+", "+Session.get("email")+", atualizado: "+Session.get("updatedfb");
     } else {
         tdata=undefined;
         return "Faça Login";
