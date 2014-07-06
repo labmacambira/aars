@@ -1,7 +1,45 @@
 #-*- coding: utf8 -*-
+from flask import Flask, render_template, make_response, session, redirect, url_for, escape, request,jsonify,Response   
 import pymongo, time as T, sys
 from twython import TwythonStreamer
 from twython import Twython
+
+
+app = Flask(__name__)
+
+hashtags=["#testeteste"]
+@app.route("/")
+def show():
+    return str(hashtags)
+@app.route("/add/<hashtag>")
+def add(hashtag):
+    global hashtags
+    hashtags.append("#"+hashtag)
+    return hashtag+" adicionada"
+@app.route("/rm/<hashtag>")
+def rm(hashtag):
+    global hashtags
+    hashtags.remove("#"+hashtag)
+    return hashtag+" removida"
+from maccess import twss3 as tw
+TWITTER_API_KEY             = tw.tak
+TWITTER_API_KEY_SECRET      = tw.taks
+TWITTER_ACCESS_TOKEN        = tw.tat
+TWITTER_ACCESS_TOKEN_SECRET = tw.tats
+from maccess import mdc as U
+@app.route("/search/<hashtag>")
+def search():
+    t = Twython(app_key=TWITTER_API_KEY, 
+            app_secret=TWITTER_API_KEY_SECRET, 
+            oauth_token=TWITTER_ACCESS_TOKEN, 
+            oauth_token_secret=TWITTER_ACCESS_TOKEN_SECRET)
+    exec "URI=U.u"+str(len(hashtags))
+
+
+if __name__ == "__main__":
+    app.debug = True
+    app.run(host='0.0.0.0',port=5001)
+
 #HTAG="#arenaNETmundial"
 HTAG="#testeteste"
 HTAG_=HTAG.replace("#","NEW")
@@ -11,7 +49,7 @@ HTAG_=HTAG.replace("#","NEW")
 #foo=C.find()
 #tweets=[ff for ff in foo if "arenaNETmundial" in ff.keys()][0]["arenaNETmundial"]
 #
-from maccess import twss2 as tw
+from maccess import twss3 as tw
 TWITTER_API_KEY             = tw.tak
 TWITTER_API_KEY_SECRET      = tw.taks
 TWITTER_ACCESS_TOKEN        = tw.tat
