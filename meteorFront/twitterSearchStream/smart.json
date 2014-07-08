@@ -1,6 +1,9 @@
 {
   "packages": {
     "twit": {},
-    "twitter-api": {}
+    "twitter-api": {},
+    "natural": {},
+    "nlp": {},
+    "npm": {}
   }
 }

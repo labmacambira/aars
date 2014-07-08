@@ -2,7 +2,6 @@ Participantes = new Meteor.Collection("participantes");
 Tweets= new Meteor.Collection("tweets");
 Configs= new Meteor.Collection("configs");
 //Configs.insert({campo:"termos",termos:["#testeteste","#participabr"]});
-
 if (Meteor.isClient) {
   Template.hello.greeting = function () {
     return "Welcome to testeappFoo.";
@@ -18,6 +17,9 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
+// aa=Tweets.find({"tweet.user.screen_name":"BorogotoSfreba"}).fetch()
+// Meteor.call('searchTwitter', "#copa");
+
 //var twitter = new TwitterApi();
 //Meteor.methods({
 //    searchTwitter: function(term) {
@@ -83,6 +85,9 @@ Meteor.methods({
     },
 });
 
+
+
   Meteor.startup(function () {
+
   });
 }
