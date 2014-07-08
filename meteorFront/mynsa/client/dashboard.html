@@ -1,3 +1,11 @@
 <template name="initialDashboard">
-YOU MAN
+<div>
+    {{#each observedTerms}}
+        <button type="button" class="btn btn-success">{{termo}}</button>
+    {{/each}}
+<input type="text" id="formGroupInputLarge" placeholder="Large input">
+<button type="button" class="btn btn-default btn-lg">
+  <span class="glyphicon glyphicon-plus"></span>
+</button>
+</div>
 </template>

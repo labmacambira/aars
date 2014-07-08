@@ -1,5 +1,8 @@
+Geral= new Meteor.Collection("geral");
 Session.set("screen","initialScreen"); // initial, dashboard, term
-
+  Template.initialDashboard.observedTerms=function(){
+    return Geral.findOne().termos_observados;
+}
   Template.main.initial= function () {
     return (Session.get("screen")==="initialScreen");
 };
@@ -17,5 +20,11 @@ Session.set("screen","initialScreen"); // initial, dashboard, term
   Template.initialPresentation.events({
     'click .btn': function () {
         Session.set("screen","dashboardScreen"); // initial, dashboard, term
+    },
+  });
+
+  Template.initialDashboard.events({
+    'click .btn-default': function () {
+        console.log("adiciona");
     },
   });
