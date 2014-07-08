@@ -1,4 +1,5 @@
 Geral= new Meteor.Collection("geral");
+Tweets= new Meteor.Collection("tweets");
 Session.set("screen","initialScreen"); // initial, dashboard, term
   Template.termoSpecs.termo=function(){
     return Session.get("termo");

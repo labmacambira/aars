@@ -1,4 +1,5 @@
 Geral= new Meteor.Collection("geral");
+Tweets= new Meteor.Collection("tweets");
 // descomente a primeira linha para zerar BD
 // ou tudo para adicionar BD dummy (bom para testes)
 
