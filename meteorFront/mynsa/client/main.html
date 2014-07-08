@@ -1,10 +1,13 @@
 <template name="main">
-<div class="container">
+<div class="container" style="text-align:center">
     {{#if initial}}
         {{> initialPresentation}}
     {{/if}}
     {{#if dashboard}}
         {{> initialDashboard}}
+    {{/if}}
+    {{#if termo}}
+        {{> termoSpecs}}
     {{/if}}
 </div>
 </template>
