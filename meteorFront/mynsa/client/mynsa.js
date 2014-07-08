@@ -19,6 +19,9 @@ Session.set("screen","initialScreen"); // initial, dashboard, term
     'click #voltarDashboard': function(){
         Session.set("screen","dashboardScreen");
     },
+    'click #buscarTweets': function(){
+        console.log(Session.get("termo"));
+    },
 });
 
   Template.main.events({
