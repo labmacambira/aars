@@ -31,14 +31,17 @@ Template.termoSpecs.tweets=function(){
         ttthis=this;
     },
 });
-  Template.tweetController.starColor=function(){
-        ttags=Tweets.findOne({_id:this._id}).tags_msg;
-        THIS=this;
-        return "#aaa";
+  Template.tweetController.glyphs1=function(){
+    return ["star","ok","user","pencil"];
+};
+  Template.tweetController.glyphs2=function(){
+    return ["plus","asterisk","minus"];
 };
   Template.tweetController.events({
     'click .glyphicon': function(e){
-        Tweets.update({_id:this._id},{"$addToSet":{"tags_msg":e.target.className.split("-")[1]}});
+        //Tweets.update({_id:this._id},{"$addToSet":{"tags_msg":e.target.className.split("-")[1]}});
+        THIS=this;
+        EE=e;
     },
 });
   Template.initialPresentation.events({

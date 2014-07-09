@@ -27,16 +27,18 @@
 </template>
 
 <template name="tweetController">
+    {{#with THIS=this}}
   <div class="row">
-              <span class="glyphicon glyphicon-star" style="background-color:{{starColor}}" id="tstar_{{tweet.id}}"></span>
-              <span class="glyphicon glyphicon-ok"     id="tok_{{tweet.id}}"></span>
-              <span class="glyphicon glyphicon-user" id="tuser_{{tweet.id}}"></span>
-          <span class="glyphicon glyphicon-pencil" id="tpencil_{{tweet.id}}"></span>
+    {{#each glyphs1}}
+          <span class="glyphicon glyphicon-{{this}}"></span>
+    {{/each}}
   </div>
+    {{THIS[0]}}
   <div class="row">
-             <span class="glyphicon glyphicon-plus"  id="tplus_{{tweet.id}}"></span>
-      <span class="glyphicon glyphicon-asterisk" id="tasterisk_{{tweet.id}}"></span>
-            <span class="glyphicon glyphicon-minus" id="tminus_{{tweet.id}}"></span>
+    {{#each glyphs2}}
+          <span class="glyphicon glyphicon-{{this}}"></span>
+    {{/each}}
   </div>
+    {{/with}}
 </template>
 
