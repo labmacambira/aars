@@ -1,5 +1,42 @@
 <template name="termoSpecs">
-<b>Termo:</b> {{termo}} 
+    <div class="container">
+        <b>Termo:</b> {{termo}} 
         <button type="button" class="btn btn-warning" id="buscarTweets" style="margin-left:10px">buscarTweets</button>
         <button type="button" class="btn btn-info" id="voltarDashboard" style="margin-left:10px">voltar</button>
+    </div>
+    <div class="container">
+    {{#each tweets}}
+        <div class="row" style="margin-top:5px;border-width:1px;border-color:#ddd;border-style:solid">
+          <div class="col-md-8" style="background-color:#eee">
+            {{> tweetDisplay}}
+          </div>
+          <div class="col-md-4">
+            {{> tweetController}}
+            </div>
+        </div>
+    {{/each}}
+    </div>
 </template>
+<template name="tweetDisplay">
+  <div class="row">
+      {{tweet.user.screen_name}}, {{tweet.created_at}}
+  </div>
+  <div class="row">
+      {{tweet.text}}
+  </div>
+</template>
+
+<template name="tweetController">
+  <div class="row">
+              <span class="glyphicon glyphicon-star" style="background-color:{{starColor}}" id="tstar_{{tweet.id}}"></span>
+              <span class="glyphicon glyphicon-ok"     id="tok_{{tweet.id}}"></span>
+              <span class="glyphicon glyphicon-user" id="tuser_{{tweet.id}}"></span>
+          <span class="glyphicon glyphicon-pencil" id="tpencil_{{tweet.id}}"></span>
+  </div>
+  <div class="row">
+             <span class="glyphicon glyphicon-plus"  id="tplus_{{tweet.id}}"></span>
+      <span class="glyphicon glyphicon-asterisk" id="tasterisk_{{tweet.id}}"></span>
+            <span class="glyphicon glyphicon-minus" id="tminus_{{tweet.id}}"></span>
+  </div>
+</template>
+

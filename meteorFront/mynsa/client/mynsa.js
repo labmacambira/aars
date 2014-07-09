@@ -1,6 +1,10 @@
 Geral= new Meteor.Collection("geral");
 Tweets= new Meteor.Collection("tweets");
 Session.set("screen","initialScreen"); // initial, dashboard, term
+
+Template.termoSpecs.tweets=function(){
+    return Tweets.find({termos_encontrados: {"$in":[Session.get("termo")] }}).fetch()
+};
   Template.termoSpecs.termo=function(){
     return Session.get("termo");
 };
@@ -23,21 +27,25 @@ Session.set("screen","initialScreen"); // initial, dashboard, term
     'click #buscarTweets': function(){
         console.log(Session.get("termo"));
     },
-});
-
-  Template.main.events({
-    'click input': function () {
-      // template data, if any, is available in 'this'
+    'click .row': function(){
+        ttthis=this;
     },
-  });
-
-
+});
+  Template.tweetController.starColor=function(){
+        ttags=Tweets.findOne({_id:this._id}).tags_msg;
+        THIS=this;
+        return "#aaa";
+};
+  Template.tweetController.events({
+    'click .glyphicon': function(e){
+        Tweets.update({_id:this._id},{"$addToSet":{"tags_msg":e.target.className.split("-")[1]}});
+    },
+});
   Template.initialPresentation.events({
     'click .btn': function () {
         Session.set("screen","dashboardScreen"); // initial, dashboard, term
     },
-  });
-
+});
   Template.initialDashboard.events({
     'click .btn-default': function () {
         novo_termo=$("#formGroupInputLarge").val();
@@ -52,4 +60,4 @@ Session.set("screen","initialScreen"); // initial, dashboard, term
         Session.set("termo",this.termo);
         Session.set("screen","termoScreen");
     }
-  });
+});
