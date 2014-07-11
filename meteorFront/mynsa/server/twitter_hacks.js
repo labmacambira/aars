@@ -8,7 +8,6 @@ var T = new TwitMaker({
     access_token:         '18882547-ZsbjCGH2XeCyAzxeCtVHAh1esPvKIiMWyarUyy1JX',
     access_token_secret:  'BkW7shEXmTm7i7R9HbnP3ljGRfadzA1TBZNhHnDbmBGol'
 });
-
 insertTweet=function(tweet){
     text=tweet.text.replace(/[\.,-\/!$%\^&\*;?:{}=\-_`~()]/g,"   ").split(" ");
     termos_b=[];
@@ -22,8 +21,6 @@ insertTweet=function(tweet){
     dbItem={tweet:tweet,termos_buscados:termos_b,termos_encontrados:termos_e,tags_msg:[]};
     Tweets.insert(dbItem);
 };
-
-
 termos=Geral.findOne().termos_observados;
 //termos=Configs.find({campo:"termos"}).fetch()[0].termos;
 streama="";
@@ -31,7 +28,6 @@ termos.forEach(function(i){
     bar=((i.termo===termos[termos.length-1].termo) ? "" : "," );
     streama+=i.termo+bar;
 });
-console.log(streama);
 stream = T.stream('statuses/filter', { track: streama });
 stream.on('tweet',
   Meteor.bindEnvironment(
@@ -43,5 +39,3 @@ stream.on('tweet',
     function( error) {console.log( error);}
   )
 );
-
-
