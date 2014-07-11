@@ -1,12 +1,16 @@
-var T = new TwitMaker({
-    consumer_key:         'iub8wm03f4sI4EMvxgdoicwIe',
-    consumer_secret:      'wlMxqHGSKjrKjhTPhQtkdR9bUnK7sZyjgsUEEcxDlHqoJCHO4D', 
-    access_token:         '18882547-183eFHigoFCYlZDh4IUSkVtsF6WM0CbX6yvu0Ah3a',
-    access_token_secret:  'YrWWp3GNudB7rXgHaj6cokJyXM6SW3GUTmO1tqoIYv6Y9'
+T = new TwitMaker({
+//    consumer_key:         'iub8wm03f4sI4EMvxgdoicwIe',
+//    consumer_secret:      'wlMxqHGSKjrKjhTPhQtkdR9bUnK7sZyjgsUEEcxDlHqoJCHO4D', 
+//    access_token:         '18882547-183eFHigoFCYlZDh4IUSkVtsF6WM0CbX6yvu0Ah3a',
+//    access_token_secret:  'YrWWp3GNudB7rXgHaj6cokJyXM6SW3GUTmO1tqoIYv6Y9'
 //    consumer_key:         'kj0HQGII7R1tfsAXhUcq6g',
 //    consumer_secret:      'LApqUqsuZmndSmOOt6erb6t72fCEe9B4BzSKCVIg', 
 //    access_token:         '18882547-ZsbjCGH2XeCyAzxeCtVHAh1esPvKIiMWyarUyy1JX',
 //    access_token_secret:  'BkW7shEXmTm7i7R9HbnP3ljGRfadzA1TBZNhHnDbmBGol'
+    consumer_key:         'uI8OdZKgtJ46fOsrZS17WWtHU',
+    consumer_secret:      '5jYehAnT71Gg8GHBfRwAyzICGDs2c4Sr2TtITQ6ruyOPc3mQjx',
+    access_token:         '2430470406-CU8OwLfbIaRCxBtpeR6KMMJRv51D2foYzSpGqYV',
+    access_token_secret:  'LCyO9ik57ihGu6IHyE4gTXNWmclVhL9PXedHFANbnKTE8'
     // deploy
 //    consumer_key:         'U3gkdcw144pb3H315Vsmphne5',
 //    consumer_secret:      'jbuLKuamEaiNPXJfhfC9kaXYcoSSfRIgTldwuQYCcUJzEGNukU', 
@@ -19,7 +23,7 @@ var T = new TwitMaker({
 //    access_token_secret:"O5B9rbgbAB9Gghbsp3y9HB95DAfiNs7YaR3Cj7IsTG5cm"
 });
 insertTweet=function(tweet){
-    text=tweet.text.replace(/[\.,-\/!$%\^&\*;?:{}=\-_`~()]/g,"   ").split(" ");
+    text=tweet.text.replace(/[\.,-\/!$%\^&\*;?:{}=\-_`~()]/g,"   ").toLowerCase().split(" ");
     termos_b=[];
     termos_e=[];
     termos.forEach(function(i){
@@ -28,11 +32,10 @@ insertTweet=function(tweet){
             termos_e.push(i.termo);
         }
     });
-    dbItem={tweet:tweet,termos_buscados:termos_b,termos_encontrados:termos_e,tags_msg:[]};
+    dbItem={tweet:tweet,termos_buscados:termos_b,termos_encontrados:termos_e};
     Tweets.insert(dbItem);
 };
-termos=Geral.findOne().termos_observados;
-//termos=Configs.find({campo:"termos"}).fetch()[0].termos;
+termos=Termos.find().fetch();
 streama="";
 termos.forEach(function(i){
     bar=((i.termo===termos[termos.length-1].termo) ? "" : "," );

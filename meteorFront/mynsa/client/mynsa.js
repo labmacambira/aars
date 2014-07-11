@@ -1,5 +1,8 @@
 Geral= new Meteor.Collection("geral");
 Tweets= new Meteor.Collection("tweets");
+Tags= new Meteor.Collection("tags"); // para guardar os tags de cada tweet
+Termos= new Meteor.Collection("termos"); // para guardar os termos de interesse
+
 Session.set("screen","initialScreen"); // initial, dashboard, term
 
 Template.termoSpecs.nTotal=function(){
@@ -15,7 +18,7 @@ Template.termoSpecs.tweets=function(){
     return Session.get("termo");
 };
   Template.initialDashboard.observedTerms=function(){
-    return Geral.findOne().termos_observados;
+    return termos=Termos.find().fetch();
 };
   Template.main.termo= function () {
     return (Session.get("screen")==="termoScreen");
@@ -76,10 +79,12 @@ Template.tglyph.helpers({
   Template.initialDashboard.events({
     'click .btn-default': function () {
         novo_termo=$("#formGroupInputLarge").val();
-        itemDB={termo:novo_termo,stats:{n_msgs:0},adicionado_em:new Date(),primeira_msg_de:new Date()};
-        Geral.update({_id:Geral.findOne()._id},{"$push":{"termos_observados":itemDB}});
+        itemDB={termo:novo_termo.toLowerCase(),adicionado_em:new Date(),primeira_msg_de:new Date()};
+        //Geral.update({_id:Geral.findOne()._id},{"$push":{"termos_observados":itemDB}});
+        Termos.insert(itemDB,function(){
+            Meteor.call("updateStream");
+        });
         $("#formGroupInputLarge").val("");
-        Meteor.call("updateStream");
     },
     'click .btn-success':function(){
         Session.set("termo",this.termo);

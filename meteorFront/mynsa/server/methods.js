@@ -1,19 +1,21 @@
 Meteor.methods({
     updateStream: function() {
-        termos=Configs.find({campo:"termos"}).fetch()[0].termos;
+        //termos=Configs.find({campo:"termos"}).fetch()[0].termos;
+        termos=Termos.find().fetch();
         streama="";
         termos.forEach(function(i){
-            bar=((i===termos[termos.length-1]) ? "" : "," );
-            streama+=i+bar;
+            bar=((i.termo===termos[termos.length-1].termo) ? "" : "," );
+            streama+=i.termo+bar;
         });
         delete stream;
+        console.log(streama);
         stream = T.stream('statuses/filter', { track: streama });
 
         stream.on('tweet',  Meteor.bindEnvironment(
-                    function (tweet) {
-                  console.log(tweet);
-                  Tweets.insert({tweet:tweet, termos:termos})
-              })
+            function (tweet) {
+              console.log(tweet);
+              insertTweet(tweet);
+            })
         );
     },
     searchTwitter: function(term) {
