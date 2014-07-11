@@ -79,6 +79,7 @@ Template.tglyph.helpers({
         itemDB={termo:novo_termo,stats:{n_msgs:0},adicionado_em:new Date(),primeira_msg_de:new Date()};
         Geral.update({_id:Geral.findOne()._id},{"$push":{"termos_observados":itemDB}});
         $("#formGroupInputLarge").val("");
+        Meteor.call("updateStream");
     },
     'click .btn-success':function(){
         Session.set("termo",this.termo);
