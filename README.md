@@ -10,7 +10,7 @@ Utilidades
 * Etiquetação de tweets e personas
 * Confronto das estruturas observadas com estruturas naturais
 * Visualizações configuráveis, interativas e de fácil acesso (e.g. programação visual)
-* Modos artísticos, dançantes (dinâmicos) e gamificados para facilitar aquisição de conhecimento a partir dos dados
+* Possibilidades interativas, artísticas e gamificadas para facilitar aquisição de conhecimento
 * Integração com dados linkados (triplas RDF)
 * Doação de dados (das redes sociais) para composição de uma base pública (com as eventuais/necessários anonimizações e tratamentos) 
 * Tecnologias e conhecimentos abertos
