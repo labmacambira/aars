@@ -75,11 +75,12 @@ Template.tglyph.helpers({
 });
   Template.initialDashboard.events({
     'click .btn-default': function () {
-        novo_termo=$("#formGroupInputLarge").val();
-        itemDB={termo:novo_termo,stats:{n_msgs:0},adicionado_em:new Date(),primeira_msg_de:new Date()};
-        Geral.update({_id:Geral.findOne()._id},{"$push":{"termos_observados":itemDB}});
-        $("#formGroupInputLarge").val("");
-        Meteor.call("updateStream");
+//        novo_termo=$("#formGroupInputLarge").val();
+//        itemDB={termo:novo_termo,stats:{n_msgs:0},adicionado_em:new Date(),primeira_msg_de:new Date()};
+//        Geral.update({_id:Geral.findOne()._id},{"$push":{"termos_observados":itemDB}});
+//        $("#formGroupInputLarge").val("");
+//        Meteor.call("updateStream");
+    alert("momentaneamente desativado");
     },
     'click .btn-success':function(){
         Session.set("termo",this.termo);
