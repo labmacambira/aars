@@ -40,8 +40,11 @@ Template.termoSpecs.tweets=function(){
   Template.tweetController.events({
     'click .glyphicon': function(e){
         //Tweets.update({_id:this._id},{"$addToSet":{"tags_msg":e.target.className.split("-")[1]}});
-        THIS=this;
-        EE=e;
+        tid=e.target.id;
+        termo=Session.get("termo");
+        glyph=this+"";
+        caminho="tags_msg."+termo;
+        Tweets.update({_id:tid},{"$addToSet":{eval(caminho):glyph}});
     },
 });
   Template.initialPresentation.events({

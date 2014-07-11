@@ -11,34 +11,11 @@
             {{> tweetDisplay}}
           </div>
           <div class="col-md-4">
+            {{_id}}
             {{> tweetController}}
             </div>
         </div>
     {{/each}}
     </div>
-</template>
-<template name="tweetDisplay">
-  <div class="row">
-      {{tweet.user.screen_name}}, {{tweet.created_at}}
-  </div>
-  <div class="row">
-      {{tweet.text}}
-  </div>
-</template>
-
-<template name="tweetController">
-    {{#with THIS=this}}
-  <div class="row">
-    {{#each glyphs1}}
-          <span class="glyphicon glyphicon-{{this}}"></span>
-    {{/each}}
-  </div>
-    {{THIS[0]}}
-  <div class="row">
-    {{#each glyphs2}}
-          <span class="glyphicon glyphicon-{{this}}"></span>
-    {{/each}}
-  </div>
-    {{/with}}
 </template>
 
