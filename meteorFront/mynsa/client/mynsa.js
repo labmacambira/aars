@@ -1,4 +1,3 @@
-Geral= new Meteor.Collection("geral");
 Tweets= new Meteor.Collection("tweets");
 Tags= new Meteor.Collection("tags"); // para guardar os tags de cada tweet
 Termos= new Meteor.Collection("termos"); // para guardar os termos de interesse
@@ -13,7 +12,7 @@ Template.termoSpecs.nOk=function(){
     return Tweets.find({"tags_msg.glifo":"ok","tags_msg.termo":Session.get("termo")}).count();
 };
 Template.termoSpecs.tweets=function(){
-    return Tweets.find({termos_encontrados: {"$in":[Session.get("termo")] }}).fetch()
+    return Tweets.find({termos_encontrados: {"$in":[Session.get("termo")] }},{sort:{"tweet.id":-1}}).fetch();
 };
   Template.termoSpecs.termo=function(){
     return Session.get("termo");
@@ -81,7 +80,6 @@ Template.tglyph.helpers({
         novo_termo=$("#formGroupInputLarge").val();
         if(_.contains(novo_termo,"#")){
             itemDB={termo:novo_termo.toLowerCase(),adicionado_em:new Date(),primeira_msg_de:new Date()};
-            //Geral.update({_id:Geral.findOne()._id},{"$push":{"termos_observados":itemDB}});
             Termos.insert(itemDB,function(){
                 Meteor.call("updateStream");
             });
