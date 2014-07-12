@@ -12,15 +12,15 @@ T = new TwitMaker({
 //    access_token:         '2430470406-CU8OwLfbIaRCxBtpeR6KMMJRv51D2foYzSpGqYV',
 //    access_token_secret:  'LCyO9ik57ihGu6IHyE4gTXNWmclVhL9PXedHFANbnKTE8'
     // deploy
-    consumer_key:         'U3gkdcw144pb3H315Vsmphne5',
-    consumer_secret:      'jbuLKuamEaiNPXJfhfC9kaXYcoSSfRIgTldwuQYCcUJzEGNukU', 
-    access_token:         '2430470406-45gX6ihMxnKQQmjX2yR1VoaTQIddgY5bT7OSOzT',
-    access_token_secret:  'bHS4NkMwBFaysdVqnsT25xhNzZwEbM64KPdpRDB6RqZ2Z'
+//    consumer_key:         'U3gkdcw144pb3H315Vsmphne5',
+//    consumer_secret:      'jbuLKuamEaiNPXJfhfC9kaXYcoSSfRIgTldwuQYCcUJzEGNukU', 
+//    access_token:         '2430470406-45gX6ihMxnKQQmjX2yR1VoaTQIddgY5bT7OSOzT',
+//    access_token_secret:  'bHS4NkMwBFaysdVqnsT25xhNzZwEbM64KPdpRDB6RqZ2Z'
     // deploy2
-//    consumer_key:       "mmsnjhnmeqaFOUkUTC46ONDBZ",
-//    consumer_secret:    "A0FS8xGk5GIHoaI8hzw5MJOyhgiD0B3vd6MRdiagDudZjbV0qD",
-//    access_token:       "2430470406-M0spmbsyfz3G1qY7YCZYR0Ye38CXeHQxNfLyqQo",
-//    access_token_secret:"O5B9rbgbAB9Gghbsp3y9HB95DAfiNs7YaR3Cj7IsTG5cm"
+    consumer_key:       "mmsnjhnmeqaFOUkUTC46ONDBZ",
+    consumer_secret:    "A0FS8xGk5GIHoaI8hzw5MJOyhgiD0B3vd6MRdiagDudZjbV0qD",
+    access_token:       "2430470406-M0spmbsyfz3G1qY7YCZYR0Ye38CXeHQxNfLyqQo",
+    access_token_secret:"O5B9rbgbAB9Gghbsp3y9HB95DAfiNs7YaR3Cj7IsTG5cm"
 });
 insertTweet=function(tweet){
     if(Tweets.find({"tweet.id":tweet.id}).count()){
