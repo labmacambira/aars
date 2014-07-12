@@ -1,0 +1,25 @@
+<template name="tweetDisplay">
+  <div class="row">
+      {{tweet.user.screen_name}}, {{tweet.created_at}}
+  </div>
+  <div class="row">
+      {{tweet.text}}
+  </div>
+</template>
+
+<template name="tweetController">
+  <div class="row">
+    {{#each glyphs1}}
+        {{> tglyph}}
+    {{/each}}
+  </div>
+  <div class="row">
+    {{#each glyphs2}}
+        {{> tglyph}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="tglyph">
+          <span class="glyphicon glyphicon-{{this}}" id="{{../_id}}" style="background-color:{{color ..}}" ></span>
+</template>
