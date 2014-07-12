@@ -2,7 +2,7 @@ Geral= new Meteor.Collection("geral");
 Tweets= new Meteor.Collection("tweets"); // para guardar cada tweet de interesse
 Tags= new Meteor.Collection("tags"); // para guardar os tags de cada tweet
 Termos= new Meteor.Collection("termos"); // para guardar os termos de interesse
-
+Foo=new Meteor.Collection("foo");
 // descomente a primeira linha para zerar BD
 // ou tudo para adicionar BD dummy (bom para testes)
 Tweets.remove({});

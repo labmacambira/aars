@@ -23,17 +23,21 @@ T = new TwitMaker({
 //    access_token_secret:"O5B9rbgbAB9Gghbsp3y9HB95DAfiNs7YaR3Cj7IsTG5cm"
 });
 insertTweet=function(tweet){
-    text=tweet.text.replace(/[\.,-\/!$%\^&\*;?:{}=\-_`~()]/g,"   ").toLowerCase().split(" ");
-    termos_b=[];
-    termos_e=[];
-    termos.forEach(function(i){
-        termos_b.push(i.termo);
-        if(_.contains(text,i.termo)){
-            termos_e.push(i.termo);
-        }
-    });
-    dbItem={tweet:tweet,termos_buscados:termos_b,termos_encontrados:termos_e};
-    Tweets.insert(dbItem);
+    if(Tweets.find({"tweet.id":tweet.id}).count()){
+        console.log("tweet duplicado pelo streamer");
+    } else {
+        text=tweet.text.replace(/[\.,-\/!$%\^&\*;?:{}=\-_`~()]/g,"   ").toLowerCase().split(" ");
+        termos_b=[];
+        termos_e=[];
+        termos.forEach(function(i){
+            termos_b.push(i.termo);
+            if(_.contains(text,i.termo)){
+                termos_e.push(i.termo);
+            }
+        });
+        dbItem={tweet:tweet,termos_buscados:termos_b,termos_encontrados:termos_e};
+        Tweets.insert(dbItem);
+    }
 };
 termos=Termos.find().fetch();
 streama="";

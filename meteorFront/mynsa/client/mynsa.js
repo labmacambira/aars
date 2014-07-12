@@ -2,6 +2,7 @@ Geral= new Meteor.Collection("geral");
 Tweets= new Meteor.Collection("tweets");
 Tags= new Meteor.Collection("tags"); // para guardar os tags de cada tweet
 Termos= new Meteor.Collection("termos"); // para guardar os termos de interesse
+Foo=new Meteor.Collection("foo");
 
 Session.set("screen","initialScreen"); // initial, dashboard, term
 
@@ -34,8 +35,7 @@ Template.termoSpecs.tweets=function(){
         Session.set("screen","dashboardScreen");
     },
     'click #buscarTweets': function(){
-        console.log(Session.get("termo"));
-        alert("busca retroativa ainda não implementada");
+        Meteor.call("searchTwitter",Session.get("termo"));
     },
     'click .row': function(){
         ttthis=this;
@@ -79,12 +79,16 @@ Template.tglyph.helpers({
   Template.initialDashboard.events({
     'click .btn-default': function () {
         novo_termo=$("#formGroupInputLarge").val();
-        itemDB={termo:novo_termo.toLowerCase(),adicionado_em:new Date(),primeira_msg_de:new Date()};
-        //Geral.update({_id:Geral.findOne()._id},{"$push":{"termos_observados":itemDB}});
-        Termos.insert(itemDB,function(){
-            Meteor.call("updateStream");
-        });
-        $("#formGroupInputLarge").val("");
+        if(_.contains(novo_termo,"#")){
+            itemDB={termo:novo_termo.toLowerCase(),adicionado_em:new Date(),primeira_msg_de:new Date()};
+            //Geral.update({_id:Geral.findOne()._id},{"$push":{"termos_observados":itemDB}});
+            Termos.insert(itemDB,function(){
+                Meteor.call("updateStream");
+            });
+            $("#formGroupInputLarge").val("");
+        } else {
+            alert("adicione novo termo, com cerquilha");
+        }
     },
     'click .btn-success':function(){
         Session.set("termo",this.termo);

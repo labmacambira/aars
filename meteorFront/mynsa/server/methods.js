@@ -19,14 +19,15 @@ Meteor.methods({
         );
     },
     searchTwitter: function(term) {
-//Meteor.call('searchTwitter', "#testeteste");
-        T.get('search/tweets', { q: term, count: 200 },
-              Meteor.bindEnvironment(
-               function(err, data, response) {
-                    console.log(data);
-                    data.statuses.forEach(function(i){Tweets.insert(i);});
-                  },
-               function( error) {console.log( error);})
-              );
+      T.get('search/tweets', { q: term, count: 100 },
+        Meteor.bindEnvironment(
+          function(err, data, response) {
+            data.statuses.forEach(function(i){
+               insertTweet(i);
+            });
+            console.log("tdata escrito");
+          },
+          function( error) {console.log( error);})
+      );
     },
 });
