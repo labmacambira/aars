@@ -1,16 +1,23 @@
 Meteor.methods({
     updateStream: function() {
-        //termos=Configs.find({campo:"termos"}).fetch()[0].termos;
         termos=Termos.find().fetch();
-        streama="";
+        streama=[];
         termos.forEach(function(i){
-            bar=((i.termo===termos[termos.length-1].termo) ? "" : "," );
-            streama+=i.termo+bar;
+            streama.push(i.termo);
         });
-        delete stream;
+        //delete stream, T;
         console.log(streama);
+        //T = new TwitMaker({
+        //    consumer_key:             tauth[INDICET].consumer_key,
+        //    consumer_secret:          tauth[INDICET].consumer_secret, 
+        //    access_token:             tauth[INDICET].access_token,
+        //    access_token_secret:      tauth[INDICET].access_token_secret
+        //}); INCREMENTA();
+        stream.stop(); // stopa...
+        stream.request.abort();
+        stream.removeAllListeners();
+        //stream.reconnect();
         stream = T.stream('statuses/filter', { track: streama });
-
         stream.on('tweet',  Meteor.bindEnvironment(
             function (tweet) {
               console.log(tweet);
@@ -25,7 +32,6 @@ Meteor.methods({
             data.statuses.forEach(function(i){
                insertTweet(i);
             });
-            console.log("tdata escrito");
           },
           function( error) {console.log( error);})
       );
