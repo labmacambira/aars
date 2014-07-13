@@ -24,7 +24,7 @@ tauth=[
     access_token_secret:"O5B9rbgbAB9Gghbsp3y9HB95DAfiNs7YaR3Cj7IsTG5cm"}
 ];
 INCREMENTA=function(){INDICET=(INDICET+1)%3;};
-INDICET=1;
+INDICET=2;
 T = new TwitMaker({
     consumer_key:             tauth[INDICET].consumer_key,
     consumer_secret:          tauth[INDICET].consumer_secret, 

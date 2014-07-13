@@ -13,9 +13,12 @@ Meteor.methods({
         //    access_token:             tauth[INDICET].access_token,
         //    access_token_secret:      tauth[INDICET].access_token_secret
         //}); INCREMENTA();
-        stream.stop(); // stopa...
+        //stream.removeAllListeners();
         stream.request.abort();
-        stream.removeAllListeners();
+        stream.request.destroy();
+        //stream.stop(); // stopa...
+        delete stream;
+        //stream.stopStallTimer();
         //stream.reconnect();
         stream = T.stream('statuses/filter', { track: streama });
         stream.on('tweet',  Meteor.bindEnvironment(
@@ -24,6 +27,7 @@ Meteor.methods({
               insertTweet(tweet);
             })
         );
+        //stream.resetStallTimer();
     },
     searchTwitter: function(term) {
       T.get('search/tweets', { q: term, count: 100 },
