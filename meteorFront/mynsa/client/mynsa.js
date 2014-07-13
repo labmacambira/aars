@@ -1,7 +1,6 @@
 Tweets= new Meteor.Collection("tweets");
 Tags= new Meteor.Collection("tags"); // para guardar os tags de cada tweet
 Termos= new Meteor.Collection("termos"); // para guardar os termos de interesse
-Foo=new Meteor.Collection("foo");
 
 Session.set("screen","initialScreen"); // initial, dashboard, term
 
@@ -76,18 +75,7 @@ Template.tglyph.helpers({
     },
 });
   Template.initialDashboard.events({
-    'click .btn-default': function () {
-        novo_termo=$("#formGroupInputLarge").val();
-        if(_.contains(novo_termo,"#")){
-            itemDB={termo:novo_termo.toLowerCase(),adicionado_em:new Date(),primeira_msg_de:new Date()};
-            Termos.insert(itemDB,function(){
-                Meteor.call("updateStream");
-            });
-            $("#formGroupInputLarge").val("");
-        } else {
-            alert("adicione novo termo, com cerquilha");
-        }
-    },
+    'click .btn-default': updateTerms,
     'click .btn-success':function(){
         Session.set("termo",this.termo);
         Session.set("screen","termoScreen");

@@ -24,13 +24,13 @@ tauth=[
     access_token_secret:"O5B9rbgbAB9Gghbsp3y9HB95DAfiNs7YaR3Cj7IsTG5cm"}
 ];
 INCREMENTA=function(){INDICET=(INDICET+1)%3;};
-INDICET=2;
+INDICET=0;
 T = new TwitMaker({
     consumer_key:             tauth[INDICET].consumer_key,
     consumer_secret:          tauth[INDICET].consumer_secret, 
     access_token:             tauth[INDICET].access_token,
     access_token_secret:      tauth[INDICET].access_token_secret
-});
+});INCREMENTA();
 insertTweet=function(tweet){
     if(Tweets.find({"tweet.id":tweet.id}).count()){
         console.log("tweet duplicado pelo streamer");
