@@ -19,11 +19,23 @@ tauth=[
     {consumer_key:       "mmsnjhnmeqaFOUkUTC46ONDBZ",
     consumer_secret:    "A0FS8xGk5GIHoaI8hzw5MJOyhgiD0B3vd6MRdiagDudZjbV0qD",
     access_token:       "2430470406-M0spmbsyfz3G1qY7YCZYR0Ye38CXeHQxNfLyqQo",
-    access_token_secret:"O5B9rbgbAB9Gghbsp3y9HB95DAfiNs7YaR3Cj7IsTG5cm"}
+    access_token_secret:"O5B9rbgbAB9Gghbsp3y9HB95DAfiNs7YaR3Cj7IsTG5cm"},
+    // DDD
+    {consumer_key:       "cEqrKEMpzfsXvRxyEQB2IkHGk",
+    consumer_secret:    "7xKo7H7vVrk0IjYfFDrr9YlOAqtu7etdSjtk4gPns1rS2Cskbk",
+    access_token:       "2430470406-d8HrG3BM9V3EojLQtLM8B1dukvahggB2AAUP9dd",
+    access_token_secret:"gNlB61F87lotCupJZRDAkMBz8rXMAIYqPienIN9HpBYwu"},
+    {consumer_key:       "BsZXPv6Cl4gG8qS177IofLdo8",
+    consumer_secret:    "PvXBGI308ocCUszngtsoy0ZbkR0jr8AmVTNlIIfpYfhqlvxc8S",
+    access_token:       "2430470406-EDHzlKs35ao8GXMiQeGmaW2hJxkw0exfF0qL0Ck",
+    access_token_secret:"P8q8YPhBBzAKmdR69ktTNIYDT2lgDg2SQ0zDuiieTtS7E"}
 ];
 //INCREMENTA=function(){INDICET=(INDICET+1)%3;};
-INCREMENTA=function(){INDICET=3+(INDICET)%2;}; // deploy
-INDICET=3;
+//INCREMENTA=function(){INDICET=3+(INDICET)%2;}; // deploy
+INCREMENTA=function(){INDICET=5+(INDICET)%2;}; // ddd
+//INDICET=0; // uso interno
+//INDICET=3; // deploy
+INDICET=5; //DDD
 T = new TwitMaker({
     consumer_key:             tauth[INDICET].consumer_key,
     consumer_secret:          tauth[INDICET].consumer_secret, 
