@@ -1,5 +1,5 @@
 Session.set("locked",0);
-Session.set("lockPeriod",1);
+Session.set("lockPeriod",60*20);
 Session.set("moment",new Date());
 
 updateTerms=function(){
