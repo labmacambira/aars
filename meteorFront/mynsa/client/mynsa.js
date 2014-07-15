@@ -16,7 +16,7 @@ Template.termoSpecs.tweets=function(){
   Template.termoSpecs.termo=function(){
     return Session.get("termo");
 };
-  Template.initialDashboard.observedTerms=function(){
+  Template.tweetDashboard.observedTerms=function(){
     return termos=Termos.find().fetch();
 };
   Template.main.termo= function () {
@@ -25,12 +25,21 @@ Template.termoSpecs.tweets=function(){
   Template.main.initial= function () {
     return (Session.get("screen")==="initialScreen");
 };
-  Template.main.dashboard= function () {
-    return (Session.get("screen")==="dashboardScreen");
+  Template.main.twitter= function () {
+    return (Session.get("screen")==="twitterScreen");
+};
+  Template.main.facebook= function () {
+    return (Session.get("screen")==="facebookScreen");
+};
+  Template.main.participabr = function () {
+    return (Session.get("screen")==="participaScreen");
+};
+  Template.main.options= function () {
+    return (Session.get("screen")==="optionsScreen");
 };
   Template.termoSpecs.events({
     'click #voltarDashboard': function(){
-        Session.set("screen","dashboardScreen");
+        Session.set("screen","twitterScreen");
     },
     'click #buscarTweets': function(){
         Meteor.call("searchTwitter",Session.get("termo"));
@@ -69,12 +78,23 @@ Template.tglyph.helpers({
     }
   }
 });
-  Template.initialPresentation.events({
-    'click .btn': function () {
-        Session.set("screen","dashboardScreen");
+  Template.initialOptions.events({
+    'click .twitterChoice': function () {
+        Session.set("screen","twitterScreen");
+    },
+    'click .faceChoice': function () {
+        Session.set("screen","facebookScreen");
+    },
+    'click .participaChoice': function () {
+        Session.set("screen","participaScreen");
     },
 });
-  Template.initialDashboard.events({
+  Template.initialPresentation.events({
+    'click .btn': function () {
+        Session.set("screen","optionsScreen");
+    },
+});
+  Template.tweetDashboard.events({
     'click .btn-default': updateTerms,
     'click .btn-success':function(){
         Session.set("termo",this.termo);

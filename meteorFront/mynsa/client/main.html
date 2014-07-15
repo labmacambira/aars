@@ -2,12 +2,20 @@
 <div class="container" style="text-align:center">
     {{#if initial}}
         {{> initialPresentation}}
-    {{/if}}
-    {{#if dashboard}}
-        {{> initialDashboard}}
-    {{/if}}
-    {{#if termo}}
-        {{> termoSpecs}}
+    {{else}}
+        {{> initialOptions}}
+        {{#if twitter}}
+            {{> tweetDashboard}}
+        {{/if}}
+        {{#if facebook}}
+            {{> facebookDashboard}}
+        {{/if}}
+        {{#if participabr}}
+            {{> participabrDashboard}}
+        {{/if}}
+        {{#if termo}}
+            {{> termoSpecs}}
+        {{/if}}
     {{/if}}
 </div>
 </template>

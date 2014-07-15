@@ -30,12 +30,12 @@ tauth=[
     access_token:       "2430470406-EDHzlKs35ao8GXMiQeGmaW2hJxkw0exfF0qL0Ck",
     access_token_secret:"P8q8YPhBBzAKmdR69ktTNIYDT2lgDg2SQ0zDuiieTtS7E"}
 ];
-//INCREMENTA=function(){INDICET=(INDICET+1)%3;};
+INCREMENTA=function(){INDICET=(INDICET+1)%3;};
 //INCREMENTA=function(){INDICET=3+(INDICET)%2;}; // deploy
-INCREMENTA=function(){INDICET=5+(INDICET)%2;}; // ddd
-//INDICET=0; // uso interno
+//INCREMENTA=function(){INDICET=5+(INDICET)%2;}; // ddd
+INDICET=0; // uso interno
 //INDICET=3; // deploy
-INDICET=5; //DDD
+//INDICET=5; //DDD
 T = new TwitMaker({
     consumer_key:             tauth[INDICET].consumer_key,
     consumer_secret:          tauth[INDICET].consumer_secret, 
