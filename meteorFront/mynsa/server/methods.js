@@ -37,4 +37,6 @@ Meteor.methods({
           function( error) {console.log( error);})
       );
     },
+    fbUserData: getUserData,
+    fbFriends:getFriends,
 });

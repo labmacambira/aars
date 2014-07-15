@@ -1,3 +1,23 @@
 <template name="facebookDashboard">
-        <button type="button" class="btn btn-success">Baixa minha rede</button>
+    <div id="fbDadosUser">
+        {{#with userData}}
+        <ul>
+            <li><b>nome:         </b> {{name}}</li>
+            <li><b>email:        </b> {{email}}</li>
+            <li><b>gênero:       </b> {{gender}}</li>
+            <li><b>fuso horário: </b> {{timezone}}</li>
+            <li><b>atualizado em:</b> {{updated_time}}</li>
+            <li><b>id:           </b> {{id}}</li>
+            <li><b>verificado:   </b> {{verified}}</li>
+        </ul>
+        {{/with}}
+    </div>
+    <div id="fbFriends">
+        <button type="button" class="btn btn-success baixaAmigos">Buscar amigos que fazem uso desta instância do <b>MyNSA</b></button>
+        {{#each amigos}}
+        <ul>
+            <li><b>nome: </b>{{name}}, <b>id: </b>{{id}}</li>
+        </ul>
+        {{/each}}
+    </div>
 </template>

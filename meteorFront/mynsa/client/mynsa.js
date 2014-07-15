@@ -27,15 +27,25 @@ Template.termoSpecs.tweets=function(){
   Template.tweetDashboard.observedTerms=function(){
     return termos=Termos.find().fetch();
 };
+  Template.facebookDashboard.userData=function(){
+    return Session.get("fbUserData");
+};
+  Template.facebookDashboard.amigos=function(){
+    if(Session.get("fbFriends"))
+        return Session.get("fbFriends").data;
+};
   Template.main.termo= function () {
     return (Session.get("screen")==="termoScreen");
 };
   Template.main.initial= function () {
     if(typeof Accounts.connection.userId()==="string"){
-            return 0;
-        } else {
-            return 1;
-        }
+        Meteor.call("fbUserData", function(err,data){
+            Session.set("fbUserData",data);
+        });
+        return 0;
+    } else {
+        return 1;
+    }
 };
   Template.main.twitter= function () {
     return (Session.get("screen")==="twitterScreen");
@@ -105,6 +115,15 @@ Template.tglyph.helpers({
     'click .btn': function () {
         Session.set("screen","optionsScreen");
     },
+});
+  Template.facebookDashboard.events({
+    'click .baixaAmigos': function(){
+        console.log("baixando amigos");
+                Meteor.call("fbFriends", function(err,data){
+            Session.set("fbFriends",data);
+            ee=err;
+        });
+    }
 });
   Template.tweetDashboard.events({
     'click .btn-default': updateTerms,
