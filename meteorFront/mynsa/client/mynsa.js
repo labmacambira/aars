@@ -2,7 +2,15 @@ Tweets= new Meteor.Collection("tweets");
 Tags= new Meteor.Collection("tags"); // para guardar os tags de cada tweet
 Termos= new Meteor.Collection("termos"); // para guardar os termos de interesse
 
-Session.set("screen","initialScreen"); // initial, dashboard, term
+
+Accounts.ui.config({
+  requestPermissions: {
+    facebook: ['email', 'user_friends',
+            'friends_events', 'friends_about_me',
+            'friends_status'],
+    }
+});
+
 
 Template.termoSpecs.nTotal=function(){
     return Tweets.find({"termos_encontrados":Session.get("termo")}).count();
@@ -23,7 +31,11 @@ Template.termoSpecs.tweets=function(){
     return (Session.get("screen")==="termoScreen");
 };
   Template.main.initial= function () {
-    return (Session.get("screen")==="initialScreen");
+    if(typeof Accounts.connection.userId()==="string"){
+            return 0;
+        } else {
+            return 1;
+        }
 };
   Template.main.twitter= function () {
     return (Session.get("screen")==="twitterScreen");

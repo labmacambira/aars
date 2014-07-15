@@ -34,8 +34,8 @@ passar o access token para o servidor Flask.
 Anotações
 ---------
 * Para colocar login de facebook no meteor:
-  meteor add login-ui
-  meteor add login-facebook
+  meteor add accounts-ui
+  meteor add accounts-facebook
 No .html do app, basta colocar:
   {{> loginButtons}}
 No browser, o html vai exibit botão para configurar.
