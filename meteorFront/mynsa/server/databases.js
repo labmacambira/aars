@@ -28,12 +28,12 @@ termos_observados=[  {termo:"#aao0",adicionado_em:new Date()},
                     {termo:"#democraciadigital",adicionado_em:new Date()},
                      {termo:"#participabr",adicionado_em:new Date()},
                     {termo:"#governo",adicionado_em:new Date()},
-                    {termo:"participacao social",adicionado_em:new Date()},
-                    {termo:"participacao",adicionado_em:new Date()},
-                    {termo:"linked data",adicionado_em:new Date()},
-                    {termo:"dados linkados",adicionado_em:new Date()},
-                    {termo:"dados abertos",adicionado_em:new Date()},
-                    {termo:"governo aberto",adicionado_em:new Date()}];
+                    //{termo:"participacao social",adicionado_em:new Date()},
+                    //{termo:"linked data",adicionado_em:new Date()},
+                    //{termo:"dados linkados",adicionado_em:new Date()},
+                    //{termo:"dados abertos",adicionado_em:new Date()},
+                    //{termo:"governo aberto",adicionado_em:new Date()},
+                    {termo:"participacao",adicionado_em:new Date()}];
 termos_observados.forEach(function(teach){
     Termos.insert(teach);
 });
