@@ -1,7 +1,7 @@
 aars
 ====
 
-Análise em Ação para Redes Sociais
+Análise e Ação para Redes Sociais
 
 
 Utilidades
